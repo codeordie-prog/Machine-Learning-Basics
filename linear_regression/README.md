@@ -77,7 +77,10 @@ whereby:
 # Deriving the partial derivatives
 
 To derive the partial derivatives, we need to use the chain rule of calculus.
-$\frac{\partial J}{\partial w}$ since we know the value of J we can rewrite it as:
+
+$$\frac{\partial J}{\partial w}$$
+
+since we know the value of J we can rewrite it as:
 $$\frac{\partial J}{\partial w} = \frac{\partial}{\partial w} \left( \frac{1}{2m} \sum_{i=1}^{m} (f_{w,b}(x^{(i)}) - y^{(i)})^2 \right)$$
 
 Focus on one term in the summation:
@@ -86,12 +89,10 @@ $$\frac{\partial}{\partial w} (f_{w,b}(x^{(i)}) - y^{(i)})^2$$
 Apply the chain rule:
 $$\frac{\partial}{\partial w} (f_{w,b}(x^{(i)}) - y^{(i)})^2 = 2(f_{w,b}(x^{(i)}) - y^{(i)}) \cdot \frac{\partial}{\partial w} (f_{w,b}(x^{(i)}) - y^{(i)})$$
 
-let $u = f_{w,b}(x^{(i)}) - y^{(i)}$ - This is the inner function
+Let $u = f_{w,b}(x^{(i)}) - y^{(i)}$ - This is the inner function
 
 The standard chain rule formula is:
 $$\frac{d}{dx} (g(x^n)) = n \cdot g(x^{n-1}) \cdot \frac{d}{dx} g(x)$$
-
-
 
 Now we can rewrite the equation as:
 $$\frac{\partial}{\partial w} u^2 = 2u \cdot \frac{\partial}{\partial w} u$$
@@ -102,9 +103,9 @@ $$\frac{\partial}{\partial w} (f_{w,b}(x^{(i)}) - y^{(i)})^2 = 2(f_{w,b}(x^{(i)}
 Calculating the partial derivative of the inner function:
 $$\frac{\partial}{\partial w} (f_{w,b}(x^{(i)}) - y^{(i)}) = \frac{\partial}{\partial w} (wx^{(i)} + b - y^{(i)})$$
 
-
 Let x, b and y be constants with respect to w.
-Apply the constant rule which states that the derivative of a constant is 0, e.g. $\frac{\partial}{\partial w} (b) = 0$ thus
+
+Therefore:
 $$\frac{\partial}{\partial w} (wx^{(i)} + b - y^{(i)}) = \frac{\partial}{\partial w} (wx^{(i)}) + \frac{\partial}{\partial w} (b) - \frac{\partial}{\partial w} (y^{(i)})$$
 $$= \frac{\partial}{\partial w} (wx^{(i)}) + 0 - 0$$
 $$= \frac{\partial}{\partial w} (wx^{(i)})$$
@@ -124,6 +125,8 @@ $$\frac{\partial}{\partial w} \left( \frac{1}{2m} \sum_{i=1}^{m} (f_{w,b}(x^{(i)
 the above is partial derivative of J with respect to w
 
 Now we need to find the partial derivative of J with respect to b:
+$$\frac{\partial J}{\partial b}$$
+
 $$\frac{\partial J}{\partial b} = \frac{\partial}{\partial b} \left( \frac{1}{2m} \sum_{i=1}^{m} (f_{w,b}(x^{(i)}) - y^{(i)})^2 \right)$$
 
 Focus on one term in the summation:
@@ -157,15 +160,23 @@ $$\frac{\partial J}{\partial b} = \frac{1}{2m} \sum_{i=1}^{m} 2(f_{w,b}(x^{(i)})
 cancel out the 2:
 $$\frac{\partial J}{\partial b} = \frac{1}{m} \sum_{i=1}^{m} (f_{w,b}(x^{(i)}) - y^{(i)})$$
 
-
 Since now we have the partial derivatives of J with respect to w and b, we can update the parameters using gradient descent:
 Repeat until convergence:
-- Update w (weight): $w := w - \alpha \frac{\partial J}{\partial w}$
-- Update b (bias): $b := b - \alpha \frac{\partial J}{\partial b}$
+
+- Update w (weight):
+$$w := w - \alpha \frac{\partial J}{\partial w}$$
+
+- Update b (bias):
+$$b := b - \alpha \frac{\partial J}{\partial b}$$
 
 we can now replace the partial derivatives with their calculated values:
-- Update w (weight): $w := w - \alpha \frac{1}{m} \sum_{i=1}^{m} (f_{w,b}(x^{(i)}) - y^{(i)}) \cdot x^{(i)}$
-- Update b (bias): $b := b - \alpha \frac{1}{m} \sum_{i=1}^{m} (f_{w,b}(x^{(i)}) - y^{(i)})$
+
+- Update w (weight):
+$$w := w - \alpha \frac{1}{m} \sum_{i=1}^{m} (f_{w,b}(x^{(i)}) - y^{(i)}) \cdot x^{(i)}$$
+
+- Update b (bias):
+$$b := b - \alpha \frac{1}{m} \sum_{i=1}^{m} (f_{w,b}(x^{(i)}) - y^{(i)})$$
+
 - $\alpha$ is the learning rate
 
 The above updates have to be done simultaneously (not one after the other).
@@ -181,6 +192,13 @@ The above algorithm is what we aim to implement in code.
 - `compute_gradient.py` - Contains the compute gradient implementation
 - `gradient_descent.py` - Contains the gradient descent implementation
 - `main.py` - Contains the main function to run the algorithm
+
+# How to run
+
+```bash
+cd linear_regression
+python main.py
+```
 
 
 
