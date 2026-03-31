@@ -6,19 +6,20 @@ Has the main function to run the program
 from gradient_descent import gradient_descent
 from cost_function import data
 
-def calculate_price(model, x):
+def model(w, b, x):
     """
     Calculate the price prediction by the model
     
     Args:
-        model: The model parameters (w, b)
+        w: The weight
+        b: The bias
         x: The input value
     
     Returns:
         The predicted price
     """
-    w, b = model
     return w * x + b
+
 
 def main():
 
@@ -31,11 +32,10 @@ def main():
     y = data.iloc[:, 1].values
     
     # Train the model with gradient descent
-    model = gradient_descent(0, 0, x, y, alpha, num_iters)
-    print(f"Model: w = {model[0]}, b = {model[1]}")
+    w, b = gradient_descent(0, 0, x, y, alpha, num_iters)
     
     # Use the model to predict the price of a house with 97 square meters
-    predicted_price = calculate_price(model, 97)
+    predicted_price = model(w, b, 97)
     print(f"Predicted price: {predicted_price}")
 
 if __name__ == "__main__":
